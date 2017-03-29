@@ -4,7 +4,7 @@ rm(list = ls())
 cat("\014")
 graphics.off()
 #set working directory
-setwd("/Users/Manu/Desktop/Master USA/NYU/Jobs/CAN Lab/Tao project/Data Analysis/Data 02_2017")
+setwd("Directory_Path")
 
 #load library
 library(ggplot2)
