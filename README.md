@@ -5,3 +5,4 @@ Pending:
 - Modify cost function.
 - Add UI and server.
 - Remove outliers in Y.
+- Add server and interactive graph in shiny.
