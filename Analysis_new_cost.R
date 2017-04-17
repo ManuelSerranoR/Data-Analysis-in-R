@@ -4,7 +4,7 @@ rm(list = ls())
 cat("\014")
 graphics.off()
 #set working directory
-setwd("~/Documents/Manuel/Data_Analysis/Data02_2017")
+setwd("/Users/Manu/Desktop/Master USA/NYU/Jobs/CAN Lab/Tao project/Data Analysis/Data 02_2017")
 
 #load library
 library(ggplot2)
@@ -91,8 +91,8 @@ for (i in trials[1:(length(trials))]){
                             ncol = rn)) #That t is transpose
   
   dist2 <- P-target.Matrix
-  weight_x <- 0
-  weight_y <- 10
+  weight_x <- 1
+  weight_y <- 0
   
   if ((Type == 0)|(Type == 2)){
     dist2 <- t(apply(dist2, MARGIN = 1, FUN = function(x) rotate(x, pi/4)))
@@ -124,8 +124,8 @@ scatter_graph <- ggplot(data = useful.Measure.100, aes(x = Trial, y = Measure, c
 
 scatter_graph #Displays the graph
 
-linear_regression <- ggplot() + geom_smooth(mapping = aes(x = Trial, y = Measure, color = Type), method="loess", data = useful.Measure.100) +
-  geom_vline(xintercept = c(150,700))
+linear_regression <- ggplot() + geom_smooth(mapping = aes(x = Trial, y = Measure, color = Type), method="loess", data = useful.Measure.100[1:75,]) + geom_smooth(mapping = aes(x = Trial, y = Measure, color = Type), method="loess", data = useful.Measure.100[76:350,]) + geom_smooth(mapping = aes(x = Trial, y = Measure, color = Type), method="loess", data = useful.Measure.100[351:450,]) +
+  geom_vline(xintercept = c(150,701))
 
 linear_regression
 
@@ -133,49 +133,51 @@ linear_regression
 #   geom_vline(xintercept = c(150,700))
 # 
 # combined_graphs
-# 
-# boxplot_graph <- ggplot() + geom_boxplot(mapping = aes(x = Type, y = Measure, fill = Type), data = useful.Measure.100) +
-#   geom_vline(xintercept = c(150,700))
-# 
-# boxplot_graph
-# 
-# p<-ggplot(useful.Measure.100, aes(x=Measure, fill = Type)) + 
-#   geom_histogram(color="black", bins = 30) + geom_density()
-# p
-# 
-# ggplot(useful.Measure.100, aes(x=Measure, fill = "white")) + 
-#   geom_histogram(aes(y=..density..), colour="black", bins = 30)+
-#   geom_density(alpha=.2, fill="#FF6666") 
-# 
-# remove_outliers <- function(data_in, na.rm = TRUE) {
-#   qnt <- quantile(data_in[,1], probs=c(.25, .75), na.rm = na.rm)
-#   H <- 1.5 * IQR(data_in[,1], na.rm = na.rm)
-#   y <- data_in[,1]
-#   y[data_in[,1] < (qnt[1] - H)] <- NA
-#   y[data_in[,1] > (qnt[2] + H)] <- NA
-#   y
-# }
-# 
-# y <- remove_outliers(useful.Measure.100)
-# 
-# useful.Measure.100$Measure <- y
-# 
-# scatter_graph_no_outliers <- ggplot(data = useful.Measure.100, aes(x = Trial, y = Measure, color = Type)) +
-#   geom_point()
-# 
-# scatter_graph_no_outliers #Displays the graph
-# 
-# linear_regression_no_outliers <- ggplot() + geom_smooth(mapping = aes(x = Trial, y = Measure, color = Type), method="loess", data = useful.Measure.100) +
-#   geom_vline(xintercept = c(150,700))
-# 
-# linear_regression_no_outliers
-# 
-# combined_graphs_no_outliers <- scatter_graph_no_outliers + geom_smooth(mapping = aes(x = Trial, y = Measure, color = Type), method="loess", data = useful.Measure.100) +
-#   geom_vline(xintercept = c(150,700))
-# 
-# combined_graphs_no_outliers
-# 
-# boxplot_graph_no_outliers <- ggplot() + geom_boxplot(mapping = aes(x = Type, y = Measure, fill = Type), data = useful.Measure.100) +
-#   geom_vline(xintercept = c(150,700))
-# 
-# boxplot_graph_no_outliers
+
+boxplot_graph <- ggplot() + geom_boxplot(mapping = aes(x = Type, y = Measure, fill = Type), data = useful.Measure.100) +
+  geom_vline(xintercept = c(150,700))
+
+boxplot_graph
+
+p<-ggplot(useful.Measure.100, aes(x=Measure, fill = Type)) +
+  geom_histogram(color="black", bins = 30) + geom_density()
+p
+
+ggplot(useful.Measure.100, aes(x=Measure, fill = "white")) +
+  geom_histogram(aes(y=..density..), colour="black", bins = 30)+
+  geom_density(alpha=.2, fill="#FF6666")
+
+remove_outliers <- function(data_in, na.rm = TRUE) {
+  qnt <- quantile(data_in[,1], probs=c(.25, .75), na.rm = na.rm)
+  H <- 1.5 * IQR(data_in[,1], na.rm = na.rm)
+  y <- data_in[,1]
+  y[data_in[,1] < (qnt[1] - H)] <- NA
+  y[data_in[,1] > (qnt[2] + H)] <- NA
+  y
+}
+
+y <- remove_outliers(useful.Measure.100)
+
+useful.Measure.100$Measure <- y
+
+scatter_graph_no_outliers <- ggplot(data = useful.Measure.100, aes(x = Trial, y = Measure, color = Type)) +
+  geom_point()
+
+scatter_graph_no_outliers #Displays the graph
+
+linear_regression_no_outliers <- ggplot() + geom_smooth(mapping = aes(x = Trial, y = Measure, color = Type), method="loess", data = useful.Measure.100[1:75,]) + geom_smooth(mapping = aes(x = Trial, y = Measure, color = Type), method="loess", data = useful.Measure.100[76:350,]) + geom_smooth(mapping = aes(x = Trial, y = Measure, color = Type), method="loess", data = useful.Measure.100[351:450,]) +
+  geom_vline(xintercept = c(150,701))
+
+linear_regression_no_outliers
+
+combined_graphs_no_outliers <- scatter_graph_no_outliers + geom_smooth(mapping = aes(x = Trial, y = Measure, color = Type), method="loess", data = useful.Measure.100[1:75,]) + geom_smooth(mapping = aes(x = Trial, y = Measure, color = Type), method="loess", data = useful.Measure.100[76:350,]) + geom_smooth(mapping = aes(x = Trial, y = Measure, color = Type), method="loess", data = useful.Measure.100[351:450,]) +
+  geom_vline(xintercept = c(150,701))
+
+combined_graphs_no_outliers
+
+boxplot_graph_no_outliers <- ggplot() + geom_boxplot(mapping = aes(x = Type, y = Measure, fill = Type), data = useful.Measure.100) +
+  geom_vline(xintercept = c(150,700))
+
+boxplot_graph_no_outliers
+
+
